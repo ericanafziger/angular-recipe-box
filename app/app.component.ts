@@ -4,29 +4,32 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
   <div class="container">
-    <h1>To Do List for {{month}}/{{day}}/{{year}}</h1>
+    <h1>{{currentUser}}'s Recipe Box</h1>
     <h3>{{currentFocus}}</h3>
-    <ul>
-      <li *ngFor="let currentTask of tasks">{{currentTask.description}}</li>
-    </ul>
+    <div class="well" *ngFor="let currentRecipe of recipes">
+      <h3>{{currentRecipe.title}}</h3>
+      <h5>{{currentRecipe.description}}</h5>
+      <h5>Ingredients:</h5>
+      <ul>
+        <li *ngFor="let ingredients of currentRecipe.ingredients">{{ingredients}}</li>
+      </ul>
+      <h5>Directions:</h5>
+      <p>{{currentRecipe.directions}}</p>
+    </div>
   </div>
   `
 })
 
 export class AppComponent {
-  currentFocus: string = 'Angular Homework';
-  currentTime = new Date();
-  month: number = this.currentTime.getMonth() + 1;
-  day: number = this.currentTime.getDate();
-  year: number = this.currentTime.getFullYear();
-  tasks: Task[] = [
-    new Task('Finish weekend Angular homework for Epicodus course'),
-    new Task('Begin brainstorming possible JavaScript group projects'),
-    new Task('Add README file to last few Angular repos on GitHub')
+  currentUser: string = 'Erica';
+  recipes: Recipe[] = [
+    new Recipe('French Dip', 'Delicious roast beef sandwich on a homemade hogi roll', ['1lb roast beef', '2 cups flour', '1 yellow onion', '1/2 cup sliced mushrooms'], "To begin, place roast beef and diced yellow onion in a crock pot. Add beef stock."),
+    new Recipe('Turtle Nut Cake', 'Decadent chocolate, caramel, and pecan cake with rich dark chocolate icing', ['1 box of German Cake mix', '1 cup chocolate chips', '1 bag of caramels', '4 tbs cocoa', '1/2 cup pecans'], "Follow direction on back of cake mix box to begin."),
+    new Recipe('White Bean Chicken Chili', 'Tasty chicken chile made with green salsa and white beans', ['1lb diced chicekn', '1/2 cup dry white beans', '1 tsp corriander', '1 cup salsa verde'], "Place all ingredients in crock pot. Set timer to 3 hours and cook mode to high.")
   ];
 }
 
-export class Task {
-  public done: boolean = false;
-  constructor(public description: string) { }
+export class Recipe {
+  public tested: boolean = false;
+  constructor(public title: string, public description: string, public ingredients: string[], public directions: string) { }
 }
